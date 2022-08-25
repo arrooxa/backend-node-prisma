@@ -6,7 +6,7 @@ module.exports = {
     dabase: process.env.DEV_DATABASE_NAME,
     username: process.env.DEV_DATABASE_USERNAME,
     password: process.DEV_DATABASE_PASSWORD,
-    dialect: "postgres",
+    dialect: "mysql",
   },
   production: {
     host: process.env.PROD_DATABASE_URL,
