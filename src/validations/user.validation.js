@@ -10,11 +10,11 @@ const password = (value, helpers) => {
   return value;
 };
 
-const createUser = {
+const User = {
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required().custom(password),
   }),
 };
 
-module.exports = createUser;
+module.exports = User;

@@ -3,13 +3,15 @@ const errorHandler = require("../helpers/errorHandler");
 const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 const bcrypt = require("bcrypt");
 const logger = require("../config/logger");
+const jwt = require("jsonwebtoken");
 
-// RESOLVEU O VALIDATE E FALTA AS AUTENTICAÇÕES E RBAC
+// TABELA DE ROLES, ROTA GET USER/USERS(ADMIN), RBAC
 
 const saltRounds = 10;
 
+database.Registers.removeAttribute("id");
+
 const RegisterUser = async (req, res, next) => {
-  database.Registers.removeAttribute("id");
   try {
     const user = await database.Registers.findOne({
       where: { email: req.body.email },
@@ -25,7 +27,7 @@ const RegisterUser = async (req, res, next) => {
 
       const Register = await database.Registers.create({
         email: req.body.email,
-        senha: encryptedPassword,
+        password: encryptedPassword,
       });
 
       res.send();
@@ -42,7 +44,38 @@ const RegisterUser = async (req, res, next) => {
 };
 
 const LoginUser = async (req, res, next) => {
-  res.send({ message: "ola" });
+  try {
+    const user = await database.Registers.findOne({
+      where: { email: req.body.email },
+    });
+
+    logger.info(user);
+
+    if (user) {
+      const compareBool = await bcrypt.compare(
+        req.body.password,
+        user.dataValues.password
+      );
+
+      if (compareBool) {
+        res.send(
+          jwt.sign({ username: req.body.email }, process.env.JWT_SECRET, {
+            expiresIn: "24h",
+          })
+        );
+      }
+    } else {
+      errorHandler(StatusCodes.FORBIDDEN, "login inválido!", res);
+    }
+  } catch (err) {
+    logger.error(err);
+
+    return errorHandler(
+      StatusCodes.INTERNAL_SERVER_ERROR,
+      ReasonPhrases.INTERNAL_SERVER_ERROR,
+      res
+    );
+  }
 };
 
 module.exports = { RegisterUser, LoginUser };
