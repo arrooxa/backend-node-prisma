@@ -5,13 +5,10 @@ const bcrypt = require("bcrypt");
 const logger = require("../config/logger");
 const jwt = require("jsonwebtoken");
 
-// TABELA DE ROLES, ROTA GET USER/USERS(ADMIN), RBAC
-
 const saltRounds = 10;
 
-database.Registers.removeAttribute("id");
-
 const RegisterUser = async (req, res, next) => {
+  database.Registers.removeAttribute("id");
   try {
     const user = await database.Registers.findOne({
       where: { email: req.body.email },
@@ -28,6 +25,7 @@ const RegisterUser = async (req, res, next) => {
       const Register = await database.Registers.create({
         email: req.body.email,
         password: encryptedPassword,
+        roleId: 1,
       });
 
       res.send();
@@ -59,9 +57,13 @@ const LoginUser = async (req, res, next) => {
 
       if (compareBool) {
         res.send(
-          jwt.sign({ username: req.body.email }, process.env.JWT_SECRET, {
-            expiresIn: "24h",
-          })
+          jwt.sign(
+            { username: req.body.email, role: "user" },
+            process.env.JWT_SECRET,
+            {
+              expiresIn: "24h",
+            }
+          )
         );
       }
     } else {
