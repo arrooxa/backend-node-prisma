@@ -1,5 +1,5 @@
 const winston = require("winston");
-const config = require("./config");
+const config = require("./env.config");
 
 // Define severity levels
 const levels = {
