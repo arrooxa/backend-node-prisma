@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("../swagger-output.json");
 
 const auth = require("./auth");
 const user = require("./user");
@@ -10,10 +12,10 @@ module.exports = (app) => {
 
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+  app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
   defineLogByEnvironment(app);
 
-  app.get("/", (req, res) => res.send({ message: "Hello, World!" }));
   app.use("/auth", auth);
   app.use("/user", user);
 };
