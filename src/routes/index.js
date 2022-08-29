@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 
 const auth = require("./auth");
+const user = require("./user");
 const defineLogByEnvironment = require("../config/morgan");
 
 module.exports = (app) => {
@@ -14,4 +15,5 @@ module.exports = (app) => {
 
   app.get("/", (req, res) => res.send({ message: "Hello, World!" }));
   app.use("/auth", auth);
+  app.use("/user", user);
 };

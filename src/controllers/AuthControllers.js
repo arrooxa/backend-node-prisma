@@ -26,7 +26,7 @@ const RegisterUser = async (req, res, next) => {
       userCreateInput = {
         email: req.body.email,
         password: encryptedPassword,
-        role_id: 1,
+        role_id: 2,
       };
 
       const Register = await prismaClient.users.create({
@@ -61,7 +61,7 @@ const LoginUser = async (req, res, next) => {
       return compareBool
         ? res.send(
             jwt.sign(
-              { username: req.body.email, role: user.role_id },
+              { email: req.body.email, role: user.role_id },
               process.env.JWT_SECRET,
               {
                 expiresIn: "24h",
