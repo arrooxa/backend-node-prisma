@@ -9,8 +9,8 @@ const defaultRoles = [
   },
 ];
 
-const logger = require("../src/config/logger");
-const { prismaClient } = require("../src/prisma/client");
+const logger = require("../config/logger");
+const { prismaClient } = require("./client");
 
 async function seeding() {
   for (let role of defaultRoles) {
