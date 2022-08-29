@@ -1,7 +1,6 @@
-const { StatusCodes, ReasonPhrases } = require("http-status-codes");
-const logger = require("../config/logger");
+const { StatusCodes } = require("http-status-codes");
 const jwt = require("jsonwebtoken");
-const { prismaClient, Prisma } = require("../prisma/client");
+const { prismaClient } = require("../prisma/client");
 const errorHandler = require("../helpers/errorHandler");
 
 const getAllUsers = async (req, res) => {

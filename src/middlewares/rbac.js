@@ -1,6 +1,5 @@
 const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 const jwt = require("jsonwebtoken");
-const logger = require("../config/logger");
 const errorHandler = require("../helpers/errorHandler");
 
 const rbacFilter = async (req, res, next) => {
