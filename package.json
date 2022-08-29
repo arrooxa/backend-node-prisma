@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "migrate": "npx sequelize-cli db:migrate"
+    "migrate": "npx sequelize-cli db:migrate",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint:check": "eslint .",
+    "lint:fix": "eslint --fix ."
   },
   "keywords": [],
   "author": "",
@@ -27,9 +31,12 @@
     "winston": "^3.8.1"
   },
   "devDependencies": {
+    "eslint": "^8.23.0",
+    "eslint-config-prettier": "^8.5.0",
     "nodemon": "^2.0.19",
     "prisma": "^4.2.1",
-    "swagger-autogen": "^2.21.5"
+    "swagger-autogen": "^2.21.5",
+    "prettier": "^2.7.1",
   },
   "prisma": {
     "seed": "node prisma/seed.js"
