@@ -36,7 +36,7 @@
     "nodemon": "^2.0.19",
     "prisma": "^4.2.1",
     "swagger-autogen": "^2.21.5",
-    "prettier": "^2.7.1",
+    "prettier": "^2.7.1"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
