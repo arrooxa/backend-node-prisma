@@ -5,7 +5,7 @@ const logger = require("../config/logger");
 const jwt = require("jsonwebtoken");
 const { prismaClient, Prisma } = require("../prisma/client");
 
-const saltRounds = 10;
+const saltRounds = Number(process.env.SALT_ROUNDS);
 
 const RegisterUser = async (req, res, next) => {
   try {
@@ -38,11 +38,7 @@ const RegisterUser = async (req, res, next) => {
   } catch (err) {
     logger.error(err);
 
-    return errorHandler(
-      StatusCodes.NOT_IMPLEMENTED,
-      ReasonPhrases.NOT_IMPLEMENTED,
-      res
-    );
+    return errorHandler(StatusCodes.NOT_IMPLEMENTED, err, res);
   }
 };
 
