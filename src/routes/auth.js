@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.post("/register", validate(User), RegisterUser);
 
-router.post("/login", validate(User), LoginUser);
+router.post("/login", LoginUser);
 
 module.exports = router;
