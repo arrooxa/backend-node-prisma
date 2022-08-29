@@ -1,16 +1,15 @@
-const database = require("../models");
 const errorHandler = require("../helpers/errorHandler");
 const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 const bcrypt = require("bcrypt");
 const logger = require("../config/logger");
 const jwt = require("jsonwebtoken");
+const { prismaClient, Prisma } = require("../prisma/client");
 
-const saltRounds = 10;
+const saltRounds = Number(process.env.SALT_ROUNDS);
 
 const RegisterUser = async (req, res, next) => {
-  database.Registers.removeAttribute("id");
   try {
-    const user = await database.Registers.findOne({
+    const user = await prismaClient.users.findUnique({
       where: { email: req.body.email },
     });
 
@@ -22,10 +21,16 @@ const RegisterUser = async (req, res, next) => {
         saltRounds
       );
 
-      const Register = await database.Registers.create({
+      let userCreateInput = Prisma.userCreateInput;
+
+      userCreateInput = {
         email: req.body.email,
         password: encryptedPassword,
-        roleId: 1,
+        role_id: 2,
+      };
+
+      const Register = await prismaClient.users.create({
+        data: userCreateInput,
       });
 
       res.send();
@@ -33,39 +38,33 @@ const RegisterUser = async (req, res, next) => {
   } catch (err) {
     logger.error(err);
 
-    return errorHandler(
-      StatusCodes.NOT_IMPLEMENTED,
-      ReasonPhrases.NOT_IMPLEMENTED,
-      res
-    );
+    return errorHandler(StatusCodes.NOT_IMPLEMENTED, err, res);
   }
 };
 
 const LoginUser = async (req, res, next) => {
   try {
-    const user = await database.Registers.findOne({
+    const user = await prismaClient.users.findUnique({
       where: { email: req.body.email },
     });
-
-    logger.info(user);
 
     if (user) {
       const compareBool = await bcrypt.compare(
         req.body.password,
-        user.dataValues.password
+        user.password
       );
 
-      if (compareBool) {
-        res.send(
-          jwt.sign(
-            { username: req.body.email, role: "user" },
-            process.env.JWT_SECRET,
-            {
-              expiresIn: "24h",
-            }
+      return compareBool
+        ? res.send(
+            jwt.sign(
+              { email: req.body.email, role: user.role_id },
+              process.env.JWT_SECRET,
+              {
+                expiresIn: "24h",
+              }
+            )
           )
-        );
-      }
+        : errorHandler(StatusCodes.FORBIDDEN, "login inválido!", res);
     } else {
       errorHandler(StatusCodes.FORBIDDEN, "login inválido!", res);
     }
