@@ -11,14 +11,13 @@ datasource db {
 }
 
 model Users {
+  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  email     String   @db.VarChar(255)
+  email     String   @unique @db.VarChar(255)
   password  String
   role_id   Int
   role      Roles    @relation(fields: [role_id], references: [id])
-
-  @@id([email])
 }
 
 model Roles {
