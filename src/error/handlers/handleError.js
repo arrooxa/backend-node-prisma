@@ -4,7 +4,7 @@ const handleError = error => {
     return {
         status: INTERNAL_SERVER_ERROR,
         payload: {
-            message: error.message,
+            message: error?.message ?? 'an unexpected error happened',
         },
     };
 };

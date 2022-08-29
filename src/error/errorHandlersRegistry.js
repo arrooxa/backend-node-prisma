@@ -1,5 +1,6 @@
 const UserNotFoundError = require('src/error/errors/UserNotFoundError');
 const WrongPasswordError = require('src/error/errors/WrongPasswordError');
+
 const handleUserNotFoundError = require('src/error/handlers/handleUserNotFoundError');
 const handleWrongPasswordError = require('src/error/handlers/handleWrongPasswordError');
 const handleError = require('src/error/handlers/handleError');

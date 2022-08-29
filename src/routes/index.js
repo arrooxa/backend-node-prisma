@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const auth = require("./auth");
-const { errorHandler } = require('src/middlewares/errorHandler');
+const { errorTranslator } = require('src/middlewares/errorTranslator');
 const defineLogByEnvironment = require("../config/morgan");
 
 module.exports = (app) => {
@@ -9,7 +9,7 @@ module.exports = (app) => {
 
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
-  app.use(errorHandler);
+  app.use(errorTranslator);
 
   defineLogByEnvironment(app);
 
