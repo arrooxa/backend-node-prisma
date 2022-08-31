@@ -4,8 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
+        "boot": "npx prisma generate && npm run start",
         "start": "cross-env NODE_ENV=development nodemon src/index.js",
-        "migrate": "npx sequelize-cli db:migrate",
         "format:check": "prettier --check .",
         "format:write": "prettier --write .",
         "lint:check": "eslint .",
