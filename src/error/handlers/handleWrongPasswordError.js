@@ -1,6 +1,6 @@
-const { BAD_REQUEST } = require('http-status-codes');
+const { BAD_REQUEST } = require("http-status-codes");
 
-const handleWrongPasswordError = error => {
+const handleWrongPasswordError = (error) => {
     return {
         status: BAD_REQUEST,
         payload: {
