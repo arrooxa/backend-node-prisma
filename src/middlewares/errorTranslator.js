@@ -1,4 +1,4 @@
-const errorHandlersRegistry = require('src/error/errorHandlersRegistry');
+const errorHandlersRegistry = require('../error/errorHandlersRegistry');
 const logger = require('../config/logger');
 
 module.exports.errorTranslator = (err, req, res) => {

@@ -1,9 +1,9 @@
-const UserNotFoundError = require('src/error/errors/UserNotFoundError');
-const WrongPasswordError = require('src/error/errors/WrongPasswordError');
+const UserNotFoundError = require('./errors/UserNotFoundError');
+const WrongPasswordError = require('./errors/WrongPasswordError');
 
-const handleUserNotFoundError = require('src/error/handlers/handleUserNotFoundError');
-const handleWrongPasswordError = require('src/error/handlers/handleWrongPasswordError');
-const handleError = require('src/error/handlers/handleError');
+const handleUserNotFoundError = require('./handlers/handleUserNotFoundError');
+const handleWrongPasswordError = require('./handlers/handleWrongPasswordError');
+const handleError = require('./handlers/handleError');
 
 const errorHandlersRegistry  = new Map();
 errorHandlersRegistry.set(UserNotFoundError.name, handleUserNotFoundError);

@@ -1,14 +1,14 @@
 const Joi = require("joi");
+const dotenv = require("dotenv")
+const path = require("path")
 
-require("dotenv").config();
+dotenv.config({ path: path.join(__dirname, `../../.env.${process.env.NODE_ENV}`) });
 
 const envVarsSchema = Joi.object()
   .keys({
-    NODE_ENV: Joi.string()
-      .valid("production", "development", "test")
-      .required(),
-    PORT: Joi.number().default(8080),
-    JWT_SECRET: Joi.string().required().description("JWT secret key"),
+    NODE_ENV:     Joi.string().valid("production", "development", "test").required(),
+    PORT:         Joi.number().default(8080),
+    JWT_SECRET:   Joi.string().required().description("JWT secret key"),
   })
   .unknown();
 
