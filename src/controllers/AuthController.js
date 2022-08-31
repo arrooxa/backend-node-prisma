@@ -7,7 +7,7 @@ const { prismaClient, Prisma } = require("../prisma/client");
 
 const saltRounds = Number(process.env.SALT_ROUNDS);
 
-const RegisterUser = async (req, res, next) => {
+const register = async (req, res, next) => {
   try {
     const user = await prismaClient.users.findUnique({
       where: { email: req.body.email },
@@ -42,7 +42,7 @@ const RegisterUser = async (req, res, next) => {
   }
 };
 
-const LoginUser = async (req, res, next) => {
+const login = async (req, res, next) => {
   try {
     const user = await prismaClient.users.findUnique({
       where: { email: req.body.email },
@@ -79,4 +79,4 @@ const LoginUser = async (req, res, next) => {
   }
 };
 
-module.exports = { RegisterUser, LoginUser };
+module.exports = { register, login };
