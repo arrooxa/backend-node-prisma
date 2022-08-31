@@ -6,11 +6,9 @@
         "node": true
     },
     "extends": ["eslint:recommended", "prettier"],
-    "overrides": [
-    ],
+    "overrides": [],
     "parserOptions": {
         "ecmaVersion": "latest"
     },
-    "rules": {
-    }
+    "rules": {}
 }
