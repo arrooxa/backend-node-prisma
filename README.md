@@ -11,13 +11,13 @@
 -   Clone o repositório do projeto:
 
 ```bash
-  git clone git@github.com:igc-Tech-Projects/finders-app-backend.git
+  git clone git@github.com:arrooxa/backend-node-prisma.git
 ```
 
 -   Entre no diretório do projeto:
 
 ```bash
-  cd finders-app-backend
+  cd backend-node-prisma.git
 ```
 
 -   Duplique o arquivo .env.example e renomeie preenchendo as informações do seu projeto no principal.
